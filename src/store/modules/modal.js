@@ -3,25 +3,35 @@ import Vue from 'vue'
 let _this = Vue.prototype;
 let state = {
     modal:false,
+    modalImgSrc:''
 };
 
 const mutations = {
-    changeModal:function(state,swi){
+    changeModal(state,swi){
         state.modal = swi
+    },
+    changeModalImgSrc(state,src){
+        state.modalImgSrc = src
     },
 };
 
 //事件触发后的逻辑操作
 const actions = {
-    modalAction:function({state,commit,rootState},swi){
+    modalAction({state,commit,rootState},swi){
         commit('changeModal',swi)
     },
+    modalImgSrcAction({state,commit,rootState},src){
+        commit('changeModalImgSrc',src)
+    }
 };
 
 const getters = {
-    GetModal:function(state,getters,rootState){
+    GetModal(state,getters,rootState){
         return state.modal
     },
+    GetModalImgSrc(state,getters,rootState){
+        return state.modalImgSrc
+    }
 };
 
 export default {

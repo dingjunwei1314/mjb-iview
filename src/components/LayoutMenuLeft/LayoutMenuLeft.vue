@@ -1,5 +1,5 @@
 <template>
-  <Menu :open-names="openNames" ref="leftMenu" :active-name="activeName" @on-select="route" accordion theme="dark" width="auto">
+  <Menu :open-names="openNames" ref="leftMenu" :active-name="activeName" @on-select="route" :accordion="true" theme="dark" width="auto">
     <div class="layout-logo-left">
       买家帮
     </div>
@@ -8,9 +8,13 @@
           <Icon type="ios-person"></Icon>
           个人<span class="layout-text">面板</span>
       </template>
-      <MenuItem name="1-1">
+      <MenuItem name="/index/collectionestatemanagement">
           <Icon type="ios-navigate" :size="iconSize"></Icon>
-          <span class="layout-text">Option 1</span>
+          <p class="layout-text">采集楼盘列表</p>
+      </MenuItem>
+      <MenuItem name="/index/exmineestatemanagement">
+          <Icon type="ios-navigate" :size="iconSize"></Icon>
+          <p class="layout-text">审核楼盘列表</p>
       </MenuItem>
     </Submenu>
     <Submenu name="2">
@@ -36,9 +40,9 @@
           <Icon type="ios-navigate" :size="iconSize"></Icon>
           <p class="layout-text">楼盘信息</p>
       </MenuItem>
-      <MenuItem name="/index/examinemanagement">
+      <MenuItem name="/index/estatecreate">
           <Icon type="ios-navigate" :size="iconSize"></Icon>
-          <p class="layout-text">楼盘信息</p>
+          <p class="layout-text">新增楼盘</p>
       </MenuItem>
     </Submenu>
     <Submenu name="4">

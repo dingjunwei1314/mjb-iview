@@ -44,7 +44,7 @@ export default {
                     },
                     on: {
                         click: () => {
-                            this.handle(params)
+                            this.handle(params,1)
                         }
                     }
                 }, '修改'),
@@ -55,7 +55,7 @@ export default {
                     },
                     on: {
                         click: () => {
-                            this.handle(params)
+                            this.handle(params,2)
                         }
                     }
                 }, '删除')
@@ -102,7 +102,6 @@ export default {
     },
     //操作
     handle(params,type){
-      console.log(params)
       let _this = this;
       if(type == 1){
         this.$router.push({
@@ -114,17 +113,22 @@ export default {
           content:'确认删除吗？',
           onOk(){
             let body = {
-              id:params.row.id,
-              delete:1
+              roleId:params.row.id,
             };
-            this.$http('',{body},{},{},'post').then( (res) => {
-              if(res.data.code == 0){
-                if(res.data.response.status == 1){
-                  _this.$Message.success('已删除');
-                  _this.getAdListData()
+            this.$http('/role/delRole',{},body).then( (res) => {
+              if(res.data.code === '200'){
+                if(res.data.interfaceStatus === '启用'){
+                  if(res.data.response.status == '014'){
+                    _this.$Message.success(res.data.response.message)
+                    _this.getRoleListData()
+                  }else{
+                    _this.$Message.warning(res.data.response.message)
+                  }
+                }else{
+                  _this.$Message.warning('接口维护中')
                 }
               }else{
-                this.$Message.warning('删除失败');
+                _this.$Message.warning(res.data.message)
               }
             }).catch( (err) => {
               this.tableLoading = false;

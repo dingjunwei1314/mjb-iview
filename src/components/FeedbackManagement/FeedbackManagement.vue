@@ -1,7 +1,7 @@
 <template>
   <div class="feedmanagement">
     <Row>
-      <Table border :columns="columns1" :loading="tableLoading" :data="data1"></Table>
+      <Table border :columns="columns1" :loading="tableLoading" :data="feedListData"></Table>
     </Row>
 
     <Modal
@@ -93,7 +93,7 @@ export default {
           }
         }
       ],
-      data1:[
+      feedListData:[
         {
           id:1,
           name:'大名楼',
@@ -109,15 +109,27 @@ export default {
   methods: {
     //获取角色列表数据 
     getFeedListData(){
-      let _this = this,
-      body = this.form;
+      let _this = this;
       this.tableLoading = true;
-      this.$http('',{},{body},{},'get').then( (res) => {
-
-      }).catch( (err) => {
-        this.tableLoading = false;
-        console.log(err);
-        this.$Message.error('服务器异常');
+      this.$http('/role/getAllRole').then((res) => {
+        _this.tableLoading = false;
+        if(res.data.code === '200'){
+          if(res.data.interfaceStatus === '启用'){
+            if(res.data.response.status === '000'){
+              _this.feedListData = res.data.response.data
+            }else{
+              _this.$Message.warning(res.data.response.message)
+            }
+          }else{
+            _this.$Message.warning('接口维护中')
+          }
+        }else{
+          _this.$Message.warning(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+        _this.tableLoading = false;
+        _this.$Message.warning('网络请求失败')
       })
     },
     //关闭模态框

@@ -52,14 +52,13 @@
               <FormItem prop="password">
                   <span>关键词：</span>
                   <Select
-                    style="width:100px"
+                    style="width:200px"
                     v-model="form.buildingName"
                     filterable
                     remote
                     reserve-keyword
                     placeholder="楼盘名称"
-                    :remote-method="remoteMethod"
-                    :loading="searchLoading">
+                    :remote-method="remoteMethod">
                     <Option
                       v-for="(item,index) in buidingList"
                       :key="item.key"
@@ -153,12 +152,12 @@
           </Form>
         </Col>
         <Col span="4" style="text-align:right">
-           <Button type="primary" icon="ios-search" size="large">搜索</Button>
+           <Button type="primary" @click = "searchBegin" icon="ios-search" size="large">搜索</Button>
         </Col>
     </Row>
 
     <Row style="margin-top:50px">
-      <Table border :columns="columns1" :data="data1"></Table>
+      <Table border :loading="tableLoading" :columns="columns1" :data="data1"></Table>
       <Page
         style = "text-align:center;margin-top:40px" 
         :total = "50"
@@ -181,8 +180,10 @@ export default {
       cityIdsList:[],
       buidingList:[],
       areaIdsList:[],
+      
 
-      searchLoading:false,
+
+      tableLoading:false,
       columns1:[
         {
             title: '楼盘ID',
@@ -283,7 +284,7 @@ export default {
                       },
                       on: {
                           click: () => {
-                              this.handle(params,'edit')
+                              this.handle(params,'view',1)
                           }
                       }
                   }, '查看'),
@@ -297,7 +298,7 @@ export default {
                       },
                       on: {
                           click: () => {
-                              this.handle(params,'view')
+                              this.handle(params,'edit',1)
                           }
                       }
                   }, '编辑'),
@@ -311,7 +312,7 @@ export default {
                       },
                       on: {
                           click: () => {
-                              this.handle(params,'view')
+                              this.handle(params,'view',2)
                           }
                       }
                   }, '进度信息'),
@@ -325,7 +326,7 @@ export default {
                       },
                       on: {
                           click: () => {
-                              this.handle(params,'view')
+                              this.handle(params,'view',3)
                           }
                       }
                   }, '评分信息'),
@@ -336,7 +337,7 @@ export default {
                       },
                       on: {
                           click: () => {
-                              this.handle(params,'view')
+                              this.handle(params,'view',4)
                           }
                       }
                   }, '一户一档')
@@ -350,7 +351,9 @@ export default {
         area:'',
         buildingName:'',
         gman:'',
-        gb:''
+        gb:'',
+        pageIndex:0,
+        pageSize:10
       },
       data1:[
         {
@@ -365,6 +368,31 @@ export default {
     }
   },
   methods: {
+    //获取楼盘数据
+    getEstateListData(){
+      let _this = this;
+      this.tableLoading = true;
+      this.$http('/role/getAllRole').then((res) => {
+        _this.tableLoading = false;
+        if(res.data.code === '200'){
+          if(res.data.interfaceStatus === '启用'){
+            if(res.data.response.status === '000'){
+              _this.roleList = res.data.response.data
+            }else{
+              _this.$Message.warning(res.data.response.message)
+            }
+          }else{
+            _this.$Message.warning('接口维护中')
+          }
+        }else{
+          _this.$Message.warning(res.data.message)
+        }
+      }).catch(err => {
+        console.log(err)
+        _this.tableLoading = false;
+        _this.$Message.warning('网络请求失败')
+      })
+    },
     //省市联动
     provinceChange(parentid){
       this.getProCityData(2,parentid)
@@ -378,7 +406,7 @@ export default {
         }else{
             body = {cityType:2,parentid:parentid}
         }
-        _this.$http('/citis/cityLists',{body},{},{},'post').then(function(res){
+        _this.$http('/citis/cityLists',{body},{},{},'post').then( res => {
            
           if(res.data.code==0){
        
@@ -404,7 +432,7 @@ export default {
       let _this = this,
       body = {buildingName: val};
      
-      this.$http('/backstageBuilding/getBuildingNameList', {body}, {}, {}, 'post').then(function (res) {
+      this.$http('/backstageBuilding/getBuildingNameList', {body}, {}, {}, 'post').then( res => {
         if (res.data.code == 0) {
             _this.buidingList = res.data.response;
         } else if (res.data.code == 300) {
@@ -416,15 +444,24 @@ export default {
         console.log(err)
       })
     },
+    //搜索
+    searchBegin(){
+      this.form.pageIndex = 0;
+      this.getEstateListData();
+    },
     //页码切换
     pageChange(page){
+      this.form.pageIndex = page-1;
+      this.getEstateListData();
     },
     //操作
-    handle(p,type){
+    handle(p,type,activePage){
       this.$router.push({
-        path:'/index/acquisitionviewandedit',
+        path:'/index/estateeditandview',
         query:{
+          // buildingId:p.estatemanagement
           type,
+          activePage
         }
       })
     }

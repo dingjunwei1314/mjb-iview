@@ -3,6 +3,7 @@ import qs from 'qs'
 
 export default function(url='',data={},params={},headers,method='get'){
     let baseURL='http://171.8.196.125:9002/api/pc',
+    // let baseURL='http://47.95.233.255:8081/maijiabangbackstate-1.0-SNAPSHOT',
     // let baseURL='http://192.168.1.193:8088/',
     // let baseURL='http://192.168.1.64:8088/',
     // let baseURL='http://192.168.1.59:8088',
@@ -12,34 +13,35 @@ export default function(url='',data={},params={},headers,method='get'){
         // pa = {},
         // da = {},
     token = localStorage.token;
-    params.token = token;
-    // if(method == 'post'){
+    // params.token = token;
+    if(method == 'post'){
     //     data.platform = 3
     //     data.requestTime = new Date().getTime()
     //     data.uniqueId = ''
     //     data.versionName = ''
     //     data.systemVerion = ''
     //     data.phoneBand = ''
-    //     data.token = token
+        data.token = token
     //     da = qs.stringify({d:JSON.stringify(data)})
-    // }
+    }
 
-    // if(method == 'get'){
+    if(method == 'get'){
     //     params.platform = 3
     //     params.requestTime = new Date().getTime()
     //     params.uniqueId = ''
     //     params.versionName = ''
     //     params.systemVerion = ''
     //     params.phoneBand = ''
-    //     params.token = token
+        params.token = token
     //     pa = {d:params}
-    // }
+    }
     
     return axios({
         url:url,
         baseURL:baseURL,
         responseType:'json',
         data:data,
+        // data:da,
         params:params,
         timeout:15000,
         headers: {

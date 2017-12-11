@@ -11,19 +11,14 @@
 					<LayoutContent />
 	            </Col>
 	        </Row>
-	    </div>
+	    </div>  
 
-        <Modal v-model="modal" width="360">
-            <p slot="header" style="color:#f60;text-align:center">
-                <Icon type="information-circled"></Icon>
-                <span>删除确认</span>
+        <Modal v-model="modal" class="img-modal" :mask-closable="false" :closable="false">
+            <img :src="modalImgSrc" style="width:100%" alt="">
+            <Icon type="close-round" class="close-icon" @click.native="modalClose"></Icon>
+            <p slot="footer">
+                
             </p>
-            <div style="text-align:center">
-                <p>确认删除吗?</p>
-            </div>
-            <div slot="footer" style="text-align:center">
-                <Button type="error" size="large" @click="del">确认</Button>
-            </div>
         </Modal>
     </div>
 </template>
@@ -53,6 +48,9 @@ export default {
         },
         modal(){
             return this.$store.getters.GetModal;
+        },
+        modalImgSrc(){
+            return this.$store.getters.GetModalImgSrc;
         }
     },
     methods: {
@@ -66,9 +64,9 @@ export default {
                 this.spanRight = 20;
             }
         },
-        //模态框删除按钮
-        del(){
-
+        //模态框关闭
+        modalClose(){
+            this.$store.dispatch('modalAction',false)
         },
         //tab路由切换
 		route(path){
@@ -164,5 +162,25 @@ export default {
     }
     .ivu-menu-item>i{
         position: absolute;
+    }
+    .img-modal{
+        position: relative;
+        /*padding-top: 30px*/
+    }
+    .img-modal .ivu-modal-body{
+        padding-top: 40px
+    }
+    .img-modal .close-icon{
+        position:absolute;
+        right:10px;
+        top:10px;
+        font-size:20px;
+        cursor: pointer;
+    }
+    .img-modal .close-icon:hover{
+        color: #2b85e4
+    }
+    .img-modal .ivu-modal-footer{
+        display: none;
     }
 </style>

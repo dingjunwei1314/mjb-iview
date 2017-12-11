@@ -7,7 +7,7 @@
         </FormItem>
 
         <FormItem label="性别">
-          <RadioGroup v-model="form.sex">
+          <RadioGroup v-model="form.gender">
             <Radio label="1">
               <span>男</span>
             </Radio>
@@ -49,7 +49,7 @@
         <FormItem label="所在部门">
           <Select 
             style="width:150px"
-            v-model="form.bm">
+            v-model="form.department">
             <Option label="工程" value="1"></Option>
             <Option label="规划" value="2"></Option>
             <Option label="景观" value="3"></Option>
@@ -61,25 +61,25 @@
           <Input v-model="form.newPassWordOnce" type="password" style="width: 200px"></Input>
         </FormItem>
 
-        <FormItem label="确认密码" prop="newPassWord">
-          <Input v-model="form.newPassWord" type="password" style="width: 200px"></Input>
+        <FormItem label="确认密码" prop="contactnumber">
+          <Input v-model="form.contactnumber" type="password" style="width: 200px"></Input>
         </FormItem>
 
         <FormItem label="角色分配">
           <Select 
             style="width:150px"
-            v-model="form.gl">
+            v-model="form.role">
             <Option label="超级管理员" value="1"></Option>
             <Option label="普通管理员" value="2"></Option>
           </Select>
         </FormItem>
 
         <FormItem label="设备ID">
-          <Input v-model="form.sb" type="password" style="width: 200px"></Input>
+          <Input v-model="form.emid" type="password" style="width: 200px"></Input>
         </FormItem>
 
         <FormItem label="备注">
-          <Input v-model="form.bz" type="textarea" :rows="6" style="width:600px" :autosize = "true"></Input>
+          <Input v-model="form.remark" type="textarea" :rows="6" style="width:600px" :autosize = "true"></Input>
         </FormItem>
 
 
@@ -114,29 +114,30 @@ export default {
         newPassWordOnce: [
             { required: true, min:6 , message: '密码为6-16位字符', trigger: 'blur' },
         ],
-        newPassWord: [
+        contactnumber: [
             {required: true, validator: validatePassCheck, trigger: 'blur' }
         ]
       },
       form:{
         userName:'',
-        sex:'1',
+        gender:'1',
         province:'',
         city:'',
-        bm:'1',
+        department:'1',
         newPassWordOnce:'',
-        newPassWord:'',
-        gl:'1',
-        sb:'',
-        bz:''
+        contactnumber:'',
+        role:'1',
+        emid:'',
+        remark:''
       },
     }
   },
   methods: {
     //获取数据
     getAdData(){
-      let body = {id:this.$route.query.id};
-      this.$http(url,{},body,{}).then((res) => {
+      let url = '/manager/getManageUserInfo', 
+      body = {id:this.$route.query.id};
+      this.$http(url,{},body).then((res) => {
         if(res.data.code === '200'){
           if(res.data.interfaceStatus === '启用'){
             if(res.data.response.status === '000'){
@@ -238,9 +239,9 @@ export default {
     if(this.$route.query.type == 'create'){
       this.$store.dispatch('threeLevelAction','新建管理员')
     }else{
+      this.getAdData()
       this.$store.dispatch('threeLevelAction','编辑管理员')
     }
-    
     this.$store.dispatch('secondRouteAction','/index/administratorsmanagement')
     this.$store.dispatch('activeNameAction','/index/administratorsmanagement')
     this.$store.dispatch('openNamesAction',['6'])

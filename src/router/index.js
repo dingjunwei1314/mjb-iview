@@ -15,12 +15,74 @@ const Index = function (resolve) {
   })
 }  
 
+//个人模块
+const CollectionEstateManagement = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/CollectionEstateManagement/CollectionEstateManagement'))
+  })
+}  
+
+const ExmineEstateManagement = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/ExmineEstateManagement/ExmineEstateManagement'))
+  })
+}  
+
+const CollectionEstateDetail = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/CollectionEstateDetail/CollectionEstateDetail'))
+  })
+}   
+
+const CollectionEstateEdit = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/CollectionEstateEdit/CollectionEstateEdit'))
+  })
+}
 //楼盘管理
 const EstateManagement = function (resolve) {
   require.ensure([],function () {
     resolve(require('../components/EstateManagement/EstateManagement'))
   })
 } 
+
+const EstateEditAndView = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateEditAndView/EstateEditAndView'))
+  })
+}
+
+const EstateProgressInfoDetail = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateProgressInfoDetail/EstateProgressInfoDetail'))
+  })
+}  
+
+const EstateItemScore = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateItemScore/EstateItemScore'))
+  })
+}  
+
+const EstateItemScoreDetail = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateItemScoreDetail/EstateItemScoreDetail'))
+  })
+}  
+
+const EstateCreate = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateCreate/EstateCreate'))
+  })
+}  
+
+const EstateCreateDetail = function (resolve) {
+  require.ensure([],function () {
+    resolve(require('../components/EstateCreateDetail/EstateCreateDetail'))
+  })
+}
+
+
 
 //任务管理
 const AcquisitionManagement = function (resolve) {
@@ -45,7 +107,7 @@ const ExamineViewAndCreate = function (resolve) {
   require.ensure([],function () {
     resolve(require('../components/ExamineViewAndCreate/ExamineViewAndCreate'))
   })
-}
+}   
 
 //账户管理
 const RoleManagement = function (resolve) {
@@ -162,6 +224,46 @@ let router = new Router({
         {
           path:'/index/estatemanagement',
           component:EstateManagement
+        },
+        {
+          path:'/index/estateeditandview',
+          component:EstateEditAndView
+        },
+        {
+          path:'/index/estateprogressinfodetail',
+          component:EstateProgressInfoDetail
+        },
+        {
+          path:'/index/estateitemscore',
+          component:EstateItemScore
+        },
+        {
+          path:'/index/estateItemscoredetail',
+          component:EstateItemScoreDetail
+        },
+        {
+          path:'/index/estatecreate',
+          component:EstateCreate
+        },
+        {
+          path:'/index/estatecreatedetail',
+          component:EstateCreateDetail
+        },
+        {
+          path:'/index/collectionestatemanagement',
+          component:CollectionEstateManagement
+        },
+        {
+          path:'/index/exmineestatemanagement',
+          component:ExmineEstateManagement
+        },  
+        {
+          path:'/index/collectionestatedetail',
+          component:CollectionEstateDetail
+        }, 
+        {
+          path:'/index/collectionestateedit',
+          component:CollectionEstateEdit
         }
       ]
     }

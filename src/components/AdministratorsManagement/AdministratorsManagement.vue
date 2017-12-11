@@ -175,9 +175,10 @@ export default {
       let _this = this;
       if(type == 1){
         this.$router.push({
-          path:'/index/',
+          path:'/index/administratorcreateandedit',
           query:{
-            id:params.row.id
+            id:params.row.id,
+            type:'edit'
           }
         })
       }else{
