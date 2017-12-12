@@ -95,13 +95,17 @@ export default {
             key: 'name'
         },
         {
-            title: '所在地区',
+            title: '楼盘所在地区',
             key: 'address'
         },
         {
             title: '审核人',
             key: 'address'
         },
+        {
+            title: '审核人所在地区',
+            key: 'address'
+        }，
         {
             title: '审核总量',
             key: 'address'
