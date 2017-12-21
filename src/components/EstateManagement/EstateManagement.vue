@@ -38,7 +38,7 @@
                 <Select 
                   v-model="form.area" 
                   clearable  
-                  placeholder="市"
+                  placeholder="区"
                   style="width:150px">
                   <Option
                     v-for="item in areaIdsList"
@@ -228,7 +228,7 @@ export default {
             width:150,
         },
         {
-            title:'期数',
+            title:'规划期数',
             key:'time',
             width:150,
         },
