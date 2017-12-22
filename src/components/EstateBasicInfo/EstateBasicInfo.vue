@@ -64,7 +64,7 @@
         </FormItem>
         <FormItem prop="user" label="交付状态：">
           <RadioGroup v-model="form.gman" v-if="type === 'edit'">
-            <Radio label="1">在建楼盘</Radio>
+            <Radio label="1">在售楼盘</Radio>
             <Radio label="2">二手盘</Radio>
           </RadioGroup>
           <p v-else>
