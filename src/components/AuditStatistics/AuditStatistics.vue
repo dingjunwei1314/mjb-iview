@@ -91,15 +91,11 @@ export default {
             key: 'name'
         },
         {
-            title: '楼盘所在地区',
+            title: '所在地区',
             key: 'address'
         },
         {
             title: '拍照人',
-            key: 'address'
-        },
-        {
-            title: '拍照人所在地区',
             key: 'address'
         },
         {
