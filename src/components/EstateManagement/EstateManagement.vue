@@ -7,25 +7,24 @@
                 <span>楼盘ID：</span>
                 <Input  style="width:100px"  v-model="form.buildingId" placeholder="id"></Input>
               </FormItem>
-
               <FormItem prop="user">
                 <span>区域：</span>
-                <Select 
+                <Select
                   style="width:150px"
-                  v-model="form.province" 
-                  clearable  
+                  v-model="form.province"
+                  clearable
                   @change = "provinceChange(form.province)"
                   placeholder="省">
-                  <Option 
+                  <Option
                     v-for="item in provinceIdsList"
                     :key="item.cityId"
                     :label="item.cityName"
                     :value="item.cityId">
                   </Option>
                 </Select>
-                <Select 
-                  v-model="form.city" 
-                  clearable  
+                <Select
+                  v-model="form.city"
+                  clearable
                   placeholder="市"
                   style="width:150px">
                   <Option
@@ -35,9 +34,9 @@
                     :value="item.cityId">
                   </Option>
                 </Select>
-                <Select 
-                  v-model="form.area" 
-                  clearable  
+                <Select
+                  v-model="form.area"
+                  clearable
                   placeholder="区"
                   style="width:150px">
                   <Option
@@ -48,7 +47,7 @@
                   </Option>
                 </Select>
               </FormItem>
-              
+
               <FormItem prop="password">
                   <span>关键词：</span>
                   <Select
@@ -72,7 +71,7 @@
                   <span>是否严选：</span>
                   <Select
                     style="width:100px"
-                    v-model="form.gman">
+                    v-model="form.yx">
                     <Option
                       label="是"
                       value="1">
@@ -88,7 +87,7 @@
                   <span>交付状态：</span>
                   <Select
                     style="width:100px"
-                    v-model="form.gman">
+                    v-model="form.zt">
                     <Option
                       label="在建楼盘"
                       value="1">
@@ -104,7 +103,7 @@
                   <span>App上是否上线：</span>
                   <Select
                     style="width:100px"
-                    v-model="form.gman">
+                    v-model="form.sx">
                     <Option
                       label="是"
                       value="1">
@@ -120,7 +119,7 @@
                   <span>需求跟进盘：</span>
                   <Select
                     style="width:100px"
-                    v-model="form.gman">
+                    v-model="form.jp">
                     <Option
                       label="是"
                       value="1">
@@ -136,7 +135,7 @@
                   <span>楼盘来源：</span>
                   <Select
                     style="width:100px"
-                    v-model="form.gman">
+                    v-model="form.ly">
                     <Option
                       label="拍照系统"
                       value="1">
@@ -148,7 +147,7 @@
                   </Select>
               </FormItem>
 
-              
+
           </Form>
         </Col>
         <Col span="4" style="text-align:right">
@@ -159,7 +158,7 @@
     <Row style="margin-top:50px">
       <Table border :loading="tableLoading" :columns="columns1" :data="data1"></Table>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "50"
         :page-size = "10"
         :current = "2"
@@ -180,8 +179,6 @@ export default {
       cityIdsList:[],
       buidingList:[],
       areaIdsList:[],
-      
-
 
       tableLoading:false,
       columns1:[
@@ -190,7 +187,7 @@ export default {
             key: 'id',
             fixed:'left',
             width:80
-        },  
+        },
         {
             title: '楼盘名称',
             key: 'name',
@@ -350,7 +347,11 @@ export default {
         city:'',
         area:'',
         buildingName:'',
-        gman:'',
+        yx:'',
+        zt:'',
+        sx:'',
+        jp:'',
+        ly:'',
         gb:'',
         pageIndex:0,
         pageSize:10
@@ -407,16 +408,20 @@ export default {
             body = {cityType:2,parentid:parentid}
         }
         _this.$http('/citis/cityLists',{body},{},{},'post').then( res => {
-           
+
           if(res.data.code==0){
-       
+
             if(pramas == 1){
-              _this.provinceIdsList = res.data.response.cityList
-            }else{
-              _this.form.city = '';
-              _this.cityIdsList = res.data.response.cityList
+               _this.provinceIdsList = res.data.response.cityList
+               console.log(res.data.response.cityList)
+            }else if(pramas == 2){
+             // _this.form.city = '';
+               _this.cityIdsList = res.data.response.cityList
             }
-                  
+           else{
+               _this.areaIdsList = res.data.response.cityList
+            }
+
           }else if(res.data.code == 300){
             _this.$router.push('/login')
           }else{
@@ -425,13 +430,12 @@ export default {
 
         }).catch(function(err){
           console.log(err)
-        })   
+        })
     },
     //模糊搜索
     remoteMethod(val){
       let _this = this,
       body = {buildingName: val};
-     
       this.$http('/backstageBuilding/getBuildingNameList', {body}, {}, {}, 'post').then( res => {
         if (res.data.code == 0) {
             _this.buidingList = res.data.response;
@@ -467,6 +471,7 @@ export default {
     }
   },
   created(){
+    this. getEstateListData();
     this.$store.dispatch('secondLevelAction','楼盘管理')
     this.$store.dispatch('threeLevelAction','楼盘信息')
     this.$store.dispatch('secondRouteAction','/index/estatemanagement')
@@ -477,5 +482,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

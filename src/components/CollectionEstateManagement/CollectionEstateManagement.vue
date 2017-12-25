@@ -12,7 +12,7 @@
                 <span>区域：</span>
                 <RegionalLinkage :province.sync="form.province" :city.sync="form.city" :area.sync="form.area"/>
               </FormItem>
-              
+
               <FormItem prop="password">
                   <span>关键词：</span>
                   <Select
@@ -80,7 +80,7 @@
                   </Select>
               </FormItem>
 
-              
+
           </Form>
         </Col>
         <Col span="4" style="text-align:right">
@@ -91,7 +91,7 @@
     <Row style="margin-top:50px">
       <Table border :loading="tableLoading" :columns="columns1" :data="data1"></Table>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "50"
         :page-size = "10"
         :current = "2"
@@ -113,7 +113,7 @@ export default {
   data () {
 
     return {
-      
+
       buidingList:[],
       tableLoading:false,
       columns1:[
@@ -122,7 +122,7 @@ export default {
             key: 'id',
             fixed:'left',
             width:80
-        },  
+        },
         {
             title: '楼盘名称',
             key: 'name',
@@ -256,6 +256,14 @@ export default {
           isf:'是',
           tman:'丁军伟',
           time:'2017-9-1'
+        },
+        {
+          id:2,
+          name:'高速大厦',
+          address:'西安市',
+          isf:'否',
+          tman:'丁军伟',
+          time:'2017-9-1'
         }
       ]
     }
@@ -286,20 +294,20 @@ export default {
         _this.$Message.warning('网络请求失败')
       })
     },
-    
+
     //模糊搜索
     remoteMethod(val){
       let _this = this,
       body = {buildingName: val};
-     
+
       this.$http('/backstageBuilding/getBuildingNameList', {body}, {}, {}, 'post').then( res => {
-        // if (res.data.code == 0) {
-        //     _this.buidingList = res.data.response;
-        // } else if (res.data.code == 300) {
-        //     _this.$router.push('/login')
-        // } else {
-        //     message(_this,res.data.message,'warning')
-        // }
+         if (res.data.code == 0) {
+             _this.buidingList = res.data.response;
+         } else if (res.data.code == 300) {
+             _this.$router.push('/login')
+         } else {
+             message(_this,res.data.message,'warning')
+         }
       }).catch(function (err) {
         console.log(err)
       })
@@ -321,7 +329,7 @@ export default {
       this.$router.push({
         path,
         query:{
-         
+
         }
       })
     }
@@ -337,5 +345,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

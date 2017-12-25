@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-export default {
+export default{
   name: 'rolemanagement',
   data () {
     return {
@@ -16,7 +16,7 @@ export default {
         {
             title: 'ID',
             key: 'id'
-        },  
+        },
         {
             title: '角色名称',
             key: 'rolename'
@@ -64,12 +64,13 @@ export default {
         }
       ],
       roleList:[
+        { id:1 ,rolename:"yy",},
 
-      ]
+      ],
     }
   },
   methods: {
-    //获取角色列表数据 
+    //获取角色列表数据
     getRoleListData(){
       let _this = this;
       this.tableLoading = true;
@@ -79,6 +80,7 @@ export default {
           if(res.data.interfaceStatus === '启用'){
             if(res.data.response.status === '000'){
               _this.roleList = res.data.response.data
+              console.log(res.data.response.data)
             }else{
               _this.$Message.warning(res.data.response.message)
             }
@@ -105,7 +107,7 @@ export default {
       let _this = this;
       if(type == 1){
         this.$router.push({
-          path:'/index/',
+          path:'/index/acquisitioncreate',
           query:{id:params.row.id}
         })
       }else{
@@ -152,5 +154,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

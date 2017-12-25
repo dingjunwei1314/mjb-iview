@@ -4,7 +4,8 @@ import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
 import modal from './modules/modal';
-Vue.use(Vuex)
+
+Vue.use(Vuex);
 
 let state = {
     mainLoading:false,

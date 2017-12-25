@@ -2,8 +2,9 @@ import axios from 'axios'
 import qs from 'qs'
 
 export default function(url='',data={},params={},headers,method='get'){
-    let baseURL='http://171.8.196.125:9002/api/pc',
-    // let baseURL='http://47.95.233.255:8081/maijiabangbackstate-1.0-SNAPSHOT',
+    let baseURL='http://192.168.1.193:8090/api/pc',
+   //let baseURL='http://171.8.196.125:9002/api/pc',
+  // let baseURL='http://47.95.233.255:8081/maijiabangbackstate-1.0-SNAPSHOT',
     // let baseURL='http://192.168.1.193:8088/',
     // let baseURL='http://192.168.1.64:8088/',
     // let baseURL='http://192.168.1.59:8088',
@@ -35,7 +36,7 @@ export default function(url='',data={},params={},headers,method='get'){
         params.token = token
     //     pa = {d:params}
     }
-    
+
     return axios({
         url:url,
         baseURL:baseURL,
@@ -47,7 +48,7 @@ export default function(url='',data={},params={},headers,method='get'){
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
-        method:method,  
+        method:method,
         withCredentials:true
     })
 
