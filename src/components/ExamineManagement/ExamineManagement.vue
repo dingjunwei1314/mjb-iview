@@ -4,25 +4,25 @@
         <Col span="20">
            <Form  :model="form"  inline>
               <FormItem prop="user">
-                <Select 
+                <Select
                   style="width:150px"
-                  v-model="form.province" 
-                  clearable  
+                  v-model="form.province"
+                  clearable
                   @change = "provinceChange(form.province)"
                   placeholder="省">
-                  <Option 
+                  <Option
                     v-for="item in provinceIdsList"
                     :key="item.cityId"
                     :label="item.cityName"
                     :value="item.cityId">
                   </Option>
                 </Select>
-          
+
               </FormItem>
               <FormItem prop="password">
-                  <Select 
-                    v-model="form.city" 
-                    clearable  
+                  <Select
+                    v-model="form.city"
+                    clearable
                     placeholder="市"
                     style="width:150px">
                     <Option
@@ -98,7 +98,7 @@
     <Row style="margin-top:50px">
       <Table border :columns="columns1" :data="data1"></Table>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "50"
         :page-size = "10"
         :current = "2"
@@ -123,7 +123,7 @@ export default {
         {
             title: '楼盘ID',
             key: 'id'
-        },  
+        },
         {
             title: '楼盘名称',
             key: 'name'
@@ -211,16 +211,16 @@ export default {
             body = {cityType:2,parentid:parentid}
         }
         _this.$http('/citis/cityLists',{body},{},{},'post').then(function(res){
-           
+
           if(res.data.code==0){
-       
+
             if(pramas == 1){
               _this.provinceIdsList = res.data.response.cityList
             }else{
               _this.form.city = '';
               _this.cityIdsList = res.data.response.cityList
             }
-                  
+
           }else if(res.data.code == 300){
             _this.$router.push('/login')
           }else{
@@ -229,13 +229,13 @@ export default {
 
         }).catch(function(err){
           console.log(err)
-        })   
+        })
     },
     //模糊搜索
     remoteMethod(val){
       let _this = this,
       body = {buildingName: val};
-     
+
       this.$http('/backstageBuilding/getBuildingNameList', {body}, {}, {}, 'post').then(function (res) {
         if (res.data.code == 0) {
             _this.buidingList = res.data.response;
@@ -259,13 +259,13 @@ export default {
           type,
         }
       })
-    } 
+    }
   },
   created(){
     this.$store.dispatch('secondLevelAction','任务管理')
     this.$store.dispatch('threeLevelAction','审核任务管理')
     this.$store.dispatch('secondRouteAction','/index/examinemanagement')
-    this.$store.dispatch('activeNameAction','/index/examinemanagement')  
+    this.$store.dispatch('activeNameAction','/index/examinemanagement')
     this.$store.dispatch('openNamesAction',['2'])
   },
   mounted(){
@@ -275,5 +275,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

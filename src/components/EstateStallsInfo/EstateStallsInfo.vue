@@ -3,7 +3,7 @@
     <Row style="border:1px solid #ccc;padding:20px" v-show="showDetailContainer">
       <h4 style="margin-left:20px;margin-bottom:10px">当前楼盘名称：普华浅水湾</h4>
       <Form :label-width="70">
-        <FormItem prop="user" label="期 数">
+        <FormItem prop="user" label="期数">
           <CheckboxGroup @on-change="formChange" v-model="form.progress">
             <Checkbox label="0">全部</Checkbox>
             <Checkbox label="1">一期</Checkbox>
@@ -11,7 +11,7 @@
             <Checkbox label="3">三期</Checkbox>
           </CheckboxGroup>
         </FormItem>
-        <FormItem prop="user" label="幢  号">
+        <FormItem prop="user" label="幢号">
           <CheckboxGroup @on-change="formChange" v-model="form.progress">
             <Checkbox label="0">全部</Checkbox>
             <Checkbox label="1">1幢</Checkbox>
@@ -19,14 +19,14 @@
             <Checkbox label="3">3幢</Checkbox>
           </CheckboxGroup>
         </FormItem>
-        <FormItem prop="user" label="单  元">
+        <FormItem prop="user" label="单元">
           <CheckboxGroup @on-change="formChange" v-model="form.progress">
             <Checkbox label="0">全部</Checkbox>
             <Checkbox label="1">一单元</Checkbox>
             <Checkbox label="2">二单元</Checkbox>
           </CheckboxGroup>
         </FormItem>
-        <FormItem prop="user" label="楼  层">
+        <FormItem prop="user" label="楼层">
           <CheckboxGroup @on-change="formChange" v-model="form.progress">
             <Checkbox label="0">全部</Checkbox>
             <Checkbox label="1">1层</Checkbox>
@@ -52,7 +52,7 @@
         </FormItem>
       </Form>
       <p class="tit-lab">
-        
+
       </p>
       <Row :gutter="16">
         <Col span="8" v-for="(item,index) in estateProgressInfoListData.list" :key="index">
@@ -60,7 +60,7 @@
         </Col>
       </Row>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "50"
         :page-size = "10"
         :current.sync = "current"
@@ -70,7 +70,7 @@
         >
       </Page>
     </Row>
-    
+
     <Row style="border:1px solid #ccc;padding:20px" v-show="!showDetailContainer">
       <h4 style="margin-left:20px">当前楼盘名称：普华浅水湾</h4>
       <p class="tit-lab2">
@@ -81,46 +81,46 @@
 
         </FormItem>
         <FormItem prop="user" label="进度：">
-          
+
         </FormItem>
         <FormItem prop="user" label="期数：">
-          
+
         </FormItem>
         <FormItem prop="user" label="楼幢号：">
-          
+
         </FormItem>
         <FormItem prop="user" label="单元号：">
-          
+
         </FormItem>
         <FormItem prop="user" label="楼   层：">
-          
+
         </FormItem>
         <FormItem prop="user" label="门牌号：">
-          
+
         </FormItem>
         <FormItem prop="user" label="部位构件：">
-          
+
         </FormItem>
         <FormItem prop="user" label="照片：">
           <ImgPreview :imgUrl="estateProgressInfoListData.list[0].imgSrc" @previewImg="previewImg(estateProgressInfoListData.list[0].imgSrc)"/>
         </FormItem>
         <FormItem prop="user" label="照片备注：">
-          
+
         </FormItem>
         <FormItem prop="user" label="照片状态：">
-          
+
         </FormItem>
         <FormItem prop="user" label="拍照人：">
-          
+
         </FormItem>
         <FormItem prop="user" label="拍照时间：">
-          
+
         </FormItem>
         <FormItem prop="user" label="审核人：">
-          
+
         </FormItem>
         <FormItem prop="user" label="审核时间：">
-          
+
         </FormItem>
         <FormItem>
           <Button type="ghost" @click="backToList">关闭</Button>
@@ -280,4 +280,5 @@ export default {
   .ivu-form-item{
     margin-bottom: 10px
   }
+
 </style>

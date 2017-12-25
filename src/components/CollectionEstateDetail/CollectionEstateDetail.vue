@@ -23,7 +23,7 @@
             <Option  value="2">景观·新盘</Option>
             <Option  value="3">景观·二手盘</Option>
             <Option  value="3">物业</Option>
-            <Option  value="3">物业·周边</Option> 
+            <Option  value="3">物业·周边</Option>
             <Option  value="3">物业·二手</Option>
           </Select>
         </FormItem>
@@ -94,7 +94,7 @@
         <Button type="ghost" @click="batchSubmit">批量提交审核</Button>
         <Button type="ghost" @click="batchEdit">批量修改</Button>
         <Button type="warning" @click="batchDelete">批量删除</Button>
-        
+
       </Row>
       <Row :gutter="16">
         <Col span="8" v-for="(item,index) in estateProgressInfoListData.list" :key="index">
@@ -106,7 +106,7 @@
         </Col>
       </Row>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "50"
         :page-size = "10"
         :current.sync = "current"
@@ -116,7 +116,7 @@
         >
       </Page>
     </Row>
-    
+
     <Row style="border:1px solid #ccc;padding:20px" v-show="!showDetailContainer">
       <h4 style="margin-left:20px">当前楼盘名称：普华浅水湾</h4>
       <p class="tit-lab2">
@@ -127,46 +127,46 @@
 
         </FormItem>
         <FormItem prop="user" label="进度：">
-          
+
         </FormItem>
         <FormItem prop="user" label="期数：">
-          
+
         </FormItem>
         <FormItem prop="user" label="楼幢号：">
-          
+
         </FormItem>
         <FormItem prop="user" label="单元号：">
-          
+
         </FormItem>
-        <FormItem prop="user" label="楼   层：">
-          
+        <FormItem prop="user" label="楼层：">
+
         </FormItem>
         <FormItem prop="user" label="门牌号：">
-          
+
         </FormItem>
         <FormItem prop="user" label="部位构件：">
-          
+
         </FormItem>
         <FormItem prop="user" label="照片：">
           <ImgPreview :imgUrl="estateProgressInfoListData.list[0].imgSrc" @previewImg="previewImg(estateProgressInfoListData.list[0].imgSrc)"/>
         </FormItem>
         <FormItem prop="user" label="照片备注：">
-          
+
         </FormItem>
         <FormItem prop="user" label="照片状态：">
-          
+
         </FormItem>
         <FormItem prop="user" label="拍照人：">
-          
+
         </FormItem>
         <FormItem prop="user" label="拍照时间：">
-          
+
         </FormItem>
         <FormItem prop="user" label="审核人：">
-          
+
         </FormItem>
         <FormItem prop="user" label="审核时间：">
-          
+
         </FormItem>
         <FormItem>
           <Button type="ghost" @click="backToList">关闭</Button>
@@ -339,7 +339,7 @@ export default {
               if(res.data.interfaceStatus === '启用'){
                 if(res.data.response.status === '000'){
                   _this.$Message.success('提交成功')
-                  _this.$router.push('/index/rolemanagement')    
+                  _this.$router.push('/index/rolemanagement')
                 }else{
                   _this.$Message.warning(res.data.response.message)
                 }
@@ -375,7 +375,7 @@ export default {
               if(res.data.interfaceStatus === '启用'){
                 if(res.data.response.status === '000'){
                   _this.$Message.success('提交成功')
-                  _this.$router.push('/index/rolemanagement')    
+                  _this.$router.push('/index/rolemanagement')
                 }else{
                   _this.$Message.warning(res.data.response.message)
                 }

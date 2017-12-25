@@ -1,9 +1,52 @@
 <template>
   <div class="feedmanagement">
-    <Row>
-      <Table border :columns="columns1" :loading="tableLoading" :data="feedListData"></Table>
-    </Row>
+  <Row type="flex" style="border:1px solid #ccc;padding:15px;;margin-bottom:20px">
+    <Col span="20">
+      <Form  :model="form"  inline>
+          <FormItem prop="user">
+            <span>区域：</span>
+            <Select
+              style="width:150px"
+              v-model="form.province"
+              clearable
+              @change = "provinceChange(form.province)"
+              placeholder="省">
+              <Option
+                v-for="item in provinceIdsList"
+                :key="item.cityId"
+                :label="item.cityName"
+                :value="item.cityId">
+              </Option>
+            </Select>
+            <Select
+              v-model="form.city"
+              clearable
+              placeholder="市"
+              style="width:150px">
+              <Option
+                v-for="item in cityIdsList"
+                :key="item.cityId"
+                :label="item.cityName"
+                :value="item.cityId">
+              </Option>
+            </Select>
+          </FormItem>
+          <span> </span>
+          <FormItem prop="times" label="反馈时间：">
+             <Col span="12">
+                <DatePicker type="date" v-model="form.atime" placeholder="反馈日期" style="width: 200px;margin-right:6px"></DatePicker>
+             </Col>
+             <Col span="6">
+                <TimePicker type="time" v-model="form.btime" placeholder="反馈时间" style="width: 200px"></TimePicker>
+             </Col>
+          </FormItem>
+      </Form>
+    </Col>
+  </Row>
 
+  <Row>
+      <Table border :columns="columns1" :loading="tableLoading" :data="feedListData"></Table>
+  </Row>
     <Modal
       v-model="modalDetail"
       title="Common Modal dialog box title">
@@ -17,15 +60,19 @@
             <Col span="19"></Col>
           </Row>
           <Row style = "text-align:right">
-            <Col span="5">反馈人：</Col>
+            <Col span="5">省市：</Col>
+            <Col span="19"></Col>
+          </Row>
+          <Row style = "text-align:right">
+            <Col span="5">问题描述：</Col>
+            <Col span="19"></Col>
+          </Row>
+          <Row style = "text-align:right">
+            <Col span="5">用户名：</Col>
             <Col span="19"></Col>
           </Row>
           <Row style = "text-align:right">
             <Col span="5">反馈时间：</Col>
-            <Col span="19"></Col>
-          </Row>
-          <Row style = "text-align:right">
-            <Col span="5">反馈内容：</Col>
             <Col span="19"></Col>
           </Row>
       </div>
@@ -40,24 +87,30 @@ export default {
   name: 'feedmanagement',
   data () {
     return {
+      provinceIdsList:[],
+      cityIdsList:[],
       modalDetail:false,
       tableLoading:false,
       columns1:[
         {
             title: 'ID',
-            key: 'id'
-        },  
-        {
-            title: '反馈内容',
-            key: 'name'
+            key: 'userid'
         },
         {
-            title: '反馈时间',
-            key: 'address'
+            title: '省市',
+            key: 'cityName'
         },
         {
-            title:'反馈人',
-            key:'time'
+            title: '问题描述',
+            key: 'qdescribe'
+        },
+        {
+            title:'用户名',
+            key:'userName'
+        },
+        {
+            title:'反馈时间',
+             key: 'date',
         },
         {
           title:'操作',
@@ -93,30 +146,29 @@ export default {
           }
         }
       ],
+      form:{
+        province:'',
+        city:'',
+        atime:'',
+        btime:'',
+      },
       feedListData:[
-        {
-          id:1,
-          name:'大名楼',
-          address:'北京市',
-          isf:'是',
-          tman:'丁军伟',
-          time:'2017-9-1'
-        }
+
       ],
-      feedData:{}
     }
   },
   methods: {
-    //获取角色列表数据 
+    //获取角色列表数据
     getFeedListData(){
       let _this = this;
       this.tableLoading = true;
-      this.$http('/role/getAllRole').then((res) => {
+      this.$http('/question/getAllQuestion').then((res) => {
         _this.tableLoading = false;
         if(res.data.code === '200'){
           if(res.data.interfaceStatus === '启用'){
             if(res.data.response.status === '000'){
               _this.feedListData = res.data.response.data
+              console.log(res.data.response.data)
             }else{
               _this.$Message.warning(res.data.response.message)
             }
@@ -136,6 +188,40 @@ export default {
     close(){
       this.modalDetail = false;
     },
+    //省市联动
+      provinceChange(parentid){
+        this.getProCityData(2,parentid)
+      },
+    //获取省数据
+    getProCityData(pramas,parentid = 9999){
+        let _this=this;
+        let body = '';
+        if(pramas == 1){
+            body = {cityType:1}
+        }else{
+            body = {cityType:2,parentid:parentid}
+        }
+        _this.$http('/citis/cityLists',{body},{},{},'post').then( res => {
+
+          if(res.data.code==0){
+              if(pramas == 1){
+                 _this.provinceIdsList = res.data.response.cityList
+                 console.log(res.data.response.cityList)
+              }else if(pramas == 2){
+                 _this.form.city = '';
+                 _this.cityIdsList = res.data.response.cityList
+              }
+          }else if(res.data.code == 300){
+            _this.$router.push('/login')
+          }else{
+            message(_this,res.data.message,'warning')
+          }
+        }).catch(function(err){
+          console.log(err)
+        })
+    },
+
+
     //操作
     handle(params,type){
       console.log(params)
@@ -144,10 +230,11 @@ export default {
         let body = {
           id:params.row.id,
         };
-        this.$http('',{body},{},{},'post').then( (res) => {
+        this.$http('/question/getAllQuestion',{body},{},{},'post').then( (res) => {
           if(res.data.code == 0){
             if(res.data.response.status == 1){
-              _this.feedData = res.data.response;
+              _this.feedListData = res.data.response;
+              console.log(res.data.response)
               _this.modalDetail = true;
             }
           }else{
@@ -165,7 +252,7 @@ export default {
               id:params.row.id,
               delete:1
             };
-            this.$http('',{body},{},{},'post').then( (res) => {
+            this.$http('/question/delQuestion',{body},{},{},'post').then( (res) => {
               if(res.data.code == 0){
                 if(res.data.response.status == 1){
                   _this.$Message.success('已删除');
@@ -184,6 +271,7 @@ export default {
     }
   },
   created(){
+    this.getFeedListData()
     this.$store.dispatch('secondLevelAction','账户管理')
     this.$store.dispatch('threeLevelAction','问题反馈')
     this.$store.dispatch('secondRouteAction','/index/feedbackmanagement')
@@ -194,5 +282,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

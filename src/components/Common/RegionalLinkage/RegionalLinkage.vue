@@ -1,21 +1,21 @@
 <template>
 	<div style="display:inline-block">
-		<Select 
+		<Select
 		style="width:150px"
-		v-model="selfProvince" 
-		clearable  
+		v-model="selfProvince"
+		clearable
 		@on-change = "provinceChange(selfProvince)"
 		placeholder="省">
-			<Option 
+			<Option
 			v-for="item in provinceIdsList"
 			:key="item.cityId"
 			:label="item.cityName"
 			:value="item.cityId">
 			</Option>
 		</Select>
-		<Select 
-		v-model="selfCity" 
-		clearable  
+		<Select
+		v-model="selfCity"
+		clearable
 		placeholder="市"
 		@on-change = "cityChange(selfCity)"
 		style="width:150px">
@@ -26,9 +26,9 @@
 			:value="item.cityId">
 			</Option>
 		</Select>
-		<Select 
-		v-model="selfArea" 
-		clearable  
+		<Select
+		v-model="selfArea"
+		clearable
 		placeholder="区"
 		@on-change = "areaChange(selfArea)"
 		style="width:150px">
@@ -68,7 +68,7 @@
 			}
 		},
 		created(){
-			
+
 			this.selfProvince = this.province;
 			this.selfCity = this.city;
 			this.selfArea = this.area;
@@ -106,9 +106,9 @@
 					body = {cityType:3,parentid:parentid}
 		        }
 		        _this.$http('/citis/cityLists',{body},{},{},'post').then( res => {
-		           
+
 		        	if(res.data.code==0){
-		
+
 			            if(pramas == 1){
 			            	_this.provinceIdsList = res.data.response.cityList;
 			            }else if(pramas == 2){
@@ -127,17 +127,17 @@
 						if(_this.provinceIdsList.length>0 && _this.cityIdsList.length>0 && _this.areaIdsList.length>0){
 							_this.clearAble = true;
 						}
-		           				 	      
+
 		        	}else if(res.data.code == 300){
 		          		_this.$router.push('/login')
 		        	}
 		        }).catch(function(err){
 		        	console.log(err)
-		        })   
+		        })
 		    }
 		}
 	}
 </script>
 <style scoped>
-  
+
 </style>

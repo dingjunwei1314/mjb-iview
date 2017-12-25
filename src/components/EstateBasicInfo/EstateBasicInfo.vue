@@ -11,56 +11,56 @@
             <Option v-for="item in periodsList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
           <p v-else>
-            
+
           </p>
         </FormItem>
         <FormItem prop="user" label="所在地区：">
-          
+
         </FormItem>
         <FormItem prop="user" label="开发企业：">
-          
+
         </FormItem>
         <FormItem prop="user" label="楼盘地址：">
-          
+
         </FormItem>
         <FormItem prop="user" label="物业类型：">
-          
+
         </FormItem>
         <FormItem prop="user" label="景观公司：">
           <Input v-model="form.gman" placeholder="" style="width: 300px" v-if="type === 'edit'"></Input>
           <p v-else>
-            
+
           </p>
         </FormItem>
         <FormItem prop="user" label="设计公司：">
           <Input v-model="form.gman" placeholder="" style="width: 300px" v-if="type === 'edit'"></Input>
           <p v-else>
-            
+
           </p>
         </FormItem>
         <FormItem prop="user" label="施工单位：">
           <Input v-model="form.gman" placeholder="" style="width: 300px" v-if="type === 'edit'"></Input>
           <p v-else>
-            
+
           </p>
         </FormItem>
         <FormItem prop="user" label="梯户比：">
-          
+
         </FormItem>
         <FormItem prop="user" label="楼盘来源：">
-          
+
         </FormItem>
         <FormItem prop="user" label="是否严选：">
-          
+
         </FormItem>
         <FormItem prop="user" label="APP上是否上线：">
-          
+
         </FormItem>
         <FormItem prop="user" label="需跟进楼盘：">
-          
+
         </FormItem>
         <FormItem prop="user" label="备注信息：">
-          
+
         </FormItem>
         <FormItem prop="user" label="交付状态：">
           <RadioGroup v-model="form.gman" v-if="type === 'edit'">
@@ -68,7 +68,7 @@
             <Radio label="2">二手盘</Radio>
           </RadioGroup>
           <p v-else>
-            
+
           </p>
         </FormItem>
         <FormItem v-if="type === 'edit'">
@@ -122,7 +122,7 @@ export default {
         gb:[]
       },
       acData:{
-    
+
       },
     }
   },
@@ -171,7 +171,7 @@ export default {
               if(res.data.interfaceStatus === '启用'){
                 if(res.data.response.status === '000'){
                   _this.$Message.success('提交成功')
-                  _this.$router.push('/index/rolemanagement')    
+                  _this.$router.push('/index/rolemanagement')
                 }else{
                   _this.$Message.warning(res.data.response.message)
                 }

@@ -4,13 +4,13 @@
         <Col span="19">
           <Form  :model="form">
             <FormItem prop="password" label="选择地区">
-              <Select 
+              <Select
                 style="width:150px"
-                v-model="form.province" 
-                clearable  
+                v-model="form.province"
+                clearable
                 @change = "provinceChange(form.province)"
                 placeholder="省">
-                <Option 
+                <Option
                   v-for="item in provinceIdsList"
                   :key="item.cityId"
                   :label="item.cityName"
@@ -18,9 +18,9 @@
                 </Option>
               </Select>
 
-              <Select 
-                v-model="form.city" 
-                clearable  
+              <Select
+                v-model="form.city"
+                clearable
                 placeholder="市"
                 style="width:150px">
                 <Option
@@ -52,7 +52,7 @@
             <FormItem prop="password" label="统计周期">
               <DatePicker type="date" format="yyyy-MM-dd" v-model="form.btime" :options="dateBOptions" @on-change="changBeginTime" placeholder="开始时间" style="width: 200px"></DatePicker>
               <span>至</span>
-              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.etime" :options="dateEOptions" @on-change="changEndTime" placeholder="结束时间" style="width: 200px"></DatePicker>  
+              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.etime" :options="dateEOptions" @on-change="changEndTime" placeholder="结束时间" style="width: 200px"></DatePicker>
             </FormItem>
           </Form>
         </Col>
@@ -63,7 +63,7 @@
     <Row>
       <Table border :loading="tableLoading" :columns="columns1" :data="data1"></Table>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "30"
         :page-size = "10"
         :current = "1"
@@ -85,7 +85,7 @@ export default {
         {
             title: '楼盘ID',
             key: 'id'
-        },  
+        },
         {
             title: '楼盘名称',
             key: 'name'
@@ -148,7 +148,7 @@ export default {
     }
   },
   methods: {
-    //获取管理员列表数据 
+    //获取管理员列表数据
     getAdListData(){
       let _this = this,
       body = this.form;
@@ -236,5 +236,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>

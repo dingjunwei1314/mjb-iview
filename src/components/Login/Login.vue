@@ -3,6 +3,7 @@
     <Card  class="login-card">
       <Row>
         <Col span="12">
+         <!-- <p class="images"><img src="../../assets/u167.png"></p> -->
           <p class="title">全流程监控数据信息管理系统</p>
           <p class="copy">v1.0</p>
         </Col>
@@ -17,6 +18,7 @@
                 <Input type="password" v-model="formInline.contactNumber" placeholder="Password">
                     <Icon type="ios-locked-outline" slot="prepend"></Icon>
                 </Input>
+
             </FormItem>
             <FormItem prop="code" style="position:relative">
                 <Input type="text" v-model="formInline.code" style="width:200px;" placeholder="Code">
@@ -89,7 +91,7 @@ export default {
                   localStorage.token = res.data.response.data.token;
                   localStorage.userName = res.data.response.data.userName;
                   localStorage.passWord = res.data.response.data.passWord;
-                  _this.$router.push('/index/rolemanagement')    
+                  _this.$router.push('/index/rolemanagement')
                 }else{
                   _this.$Message.warning(res.data.response.message)
                 }
@@ -145,7 +147,7 @@ export default {
 <style scoped>
   .Login{
     height: 100%;
-    background: #464c5b
+    background: #464c5b;
   }
   .login-card{
     position: absolute;
@@ -155,9 +157,18 @@ export default {
     margin-top: -200px;
     width:640px;
     padding: 30px;
+
   }
-  .title{margin-top: 70px}
-  .copy{margin-top: 20px}
-  .copy,.title{text-align: center;}
+  .title{
+     margin-top: 70px;
+     font-size:16px;
+  }
+  .copy{
+     margin-top: 20px;
+  }
+  .images{
+     margin-top: 20px;
+  }
+  .copy,.title,.images{text-align: center;}
   .code{cursor:pointer;width:50px;height:32px;vertical-align:center;background:#2b85e4;text-align: center;line-height: 32px;color: #313131;font-weight: bold;letter-spacing:2px;position: absolute;right: 0;top: 0}
 </style>

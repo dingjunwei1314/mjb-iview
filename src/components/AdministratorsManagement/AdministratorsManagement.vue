@@ -12,11 +12,11 @@
             </FormItem>
 
             <FormItem prop="password">
-              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.btime" @on-change="changBeginTime" placeholder="创建时间（开始）" style="width: 200px"></DatePicker>  
+              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.btime" @on-change="changBeginTime" placeholder="创建时间（开始）" style="width: 200px"></DatePicker>
             </FormItem>
 
             <FormItem prop="password">
-              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.etime" @on-change="changEndTime" placeholder="创建时间（结束）" style="width: 200px"></DatePicker>  
+              <DatePicker type="date" format="yyyy-MM-dd" v-model="form.etime" @on-change="changEndTime" placeholder="创建时间（结束）" style="width: 200px"></DatePicker>
             </FormItem>
           </Form>
         </Col>
@@ -26,9 +26,9 @@
         </Col>
     </Row>
     <Row>
-      <Table border :loading="tableLoading" :columns="columns1" :data="data1"></Table>
+      <Table border :loading="tableLoading" :columns="columns1" :data="formlist"></Table>
       <Page
-        style = "text-align:center;margin-top:40px" 
+        style = "text-align:center;margin-top:40px"
         :total = "30"
         :page-size = "10"
         :current = "1"
@@ -50,30 +50,30 @@ export default {
         {
             title: 'ID',
             key: 'id'
-        },  
+        },
         {
             title: '用户名',
-            key: 'name'
+            key: 'userName'
         },
         {
             title: '所在区域',
-            key: 'address'
+            key: 'areaAddress'
         },
         {
             title: '所在部门',
-            key: 'address'
+            key: 'department'
         },
         {
             title:'创建时间',
-            key:'time'
+            key:'date'
         },
         {
             title:'角色分配',
-            key:'time'
+            key:'roleName'
         },
         {
             title:'登陆Ip',
-            key:'time'
+            key:'landingIp'
         },
         {
           title:'操作',
@@ -109,6 +109,17 @@ export default {
           }
         }
       ],
+      formlist:[
+        {
+        id:"1",
+        userName:"小明",
+        areaAddress:"西安-雁塔",
+        department:"研发部",
+        date:"2017/12/16-10:45",
+        roleName:"管理员",
+        landingIp:"192.168.10.2"
+        },
+      ],
       form:{
         name:'',
         uname:'',
@@ -117,32 +128,37 @@ export default {
         pageIndex:0,
         pageSize:10
       },
-      data1:[
-        {
-          id:1,
-          name:'大名楼',
-          address:'北京市',
-          isf:'是',
-          tman:'丁军伟',
-          time:'2017-9-1'
-        }
-      ]
+
     }
   },
   methods: {
-    //获取管理员列表数据 
+    //获取管理员列表数据
     getAdListData(){
       let _this = this,
       body = this.form;
       this.tableLoading = true;
       this.$http('',{},{body},{},'get').then( (res) => {
-
+     if(res.data.code === '200'){
+         if(res.data.interfaceStatus === '启用'){
+           if(res.data.response.status === '000'){
+             _this.formlist = res.data.response.data;
+             console.log(res.data.response.data)
+           }else{
+             _this.$Message.warning(res.data.response.message)
+           }
+         }else{
+           _this.$Message.warning('接口维护中')
+         }
+       }else{
+         _this.$Message.warning(res.data.message)
+       }
       }).catch( (err) => {
         this.tableLoading = false;
         console.log(err);
         this.$Message.error('服务器异常');
       })
     },
+
     //搜索
     search(){
       this.getAdListData()
@@ -209,6 +225,7 @@ export default {
     }
   },
   created(){
+    this.getAdListData()
     this.$store.dispatch('secondLevelAction','账户管理')
     this.$store.dispatch('threeLevelAction','管理员管理')
     this.$store.dispatch('secondRouteAction','/index/administratorsmanagement')
@@ -219,5 +236,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>
